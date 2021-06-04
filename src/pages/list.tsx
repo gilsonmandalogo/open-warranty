@@ -1,5 +1,7 @@
 import React from 'react';
 
-export default () => (
+const List = () => (
   <p>List</p>
 );
+
+export default List;
