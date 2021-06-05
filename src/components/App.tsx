@@ -5,9 +5,10 @@ import { Navbar } from 'components/Navbar';
 import { LoadingOverlayProvider } from 'contexts/LoadingOverlay';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import typePolicies from 'typePolicies';
 
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({ typePolicies }),
   link: createUploadLink({
     uri: 'http://localhost:4000/graphql',
   }),

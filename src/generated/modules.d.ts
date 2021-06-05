@@ -16,3 +16,12 @@ declare module '*/upload.graphql' {
   export default defaultDocument;
 }
     
+
+declare module '*/invoiceAll.graphql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const invoiceAll: DocumentNode;
+
+  export default defaultDocument;
+}
+    

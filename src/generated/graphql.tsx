@@ -35,6 +35,24 @@ export type Invoice = {
   purchase?: Maybe<Scalars['DateTime']>;
 };
 
+export type InvoiceAllResult = {
+  __typename?: 'InvoiceAllResult';
+  id: Scalars['ID'];
+  photo: Scalars['String'];
+  item: Scalars['String'];
+  duration?: Maybe<Scalars['Int']>;
+  purchase?: Maybe<Scalars['DateTime']>;
+  expDate?: Maybe<Scalars['DateTime']>;
+  progress?: Maybe<Scalars['Float']>;
+};
+
+export type InvoicePaginated = {
+  __typename?: 'InvoicePaginated';
+  items: Array<InvoiceAllResult>;
+  total: Scalars['Int'];
+  hasMore: Scalars['Boolean'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createInvoice: Invoice;
@@ -67,11 +85,17 @@ export type MutationUploadArgs = {
 export type Query = {
   __typename?: 'Query';
   invoice: Invoice;
+  invoiceAll: InvoicePaginated;
 };
 
 
 export type QueryInvoiceArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryInvoiceAllArgs = {
+  skip?: Maybe<Scalars['Int']>;
 };
 
 export type UpdateInvoiceInput = {
@@ -103,6 +127,23 @@ export type UploadMutationVariables = Exact<{
 export type UploadMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'upload'>
+);
+
+export type InvoiceAllQueryVariables = Exact<{
+  skip?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type InvoiceAllQuery = (
+  { __typename?: 'Query' }
+  & { invoiceAll: (
+    { __typename?: 'InvoicePaginated' }
+    & Pick<InvoicePaginated, 'total' | 'hasMore'>
+    & { items: Array<(
+      { __typename?: 'InvoiceAllResult' }
+      & Pick<InvoiceAllResult, 'id' | 'item' | 'expDate' | 'progress'>
+    )> }
+  ) }
 );
 
 
@@ -170,3 +211,45 @@ export function useUploadMutation(baseOptions?: Apollo.MutationHookOptions<Uploa
 export type UploadMutationHookResult = ReturnType<typeof useUploadMutation>;
 export type UploadMutationResult = Apollo.MutationResult<UploadMutation>;
 export type UploadMutationOptions = Apollo.BaseMutationOptions<UploadMutation, UploadMutationVariables>;
+export const InvoiceAllDocument = gql`
+    query invoiceAll($skip: Int) {
+  invoiceAll(skip: $skip) {
+    items {
+      id
+      item
+      expDate
+      progress
+    }
+    total
+    hasMore
+  }
+}
+    `;
+
+/**
+ * __useInvoiceAllQuery__
+ *
+ * To run a query within a React component, call `useInvoiceAllQuery` and pass it any options that fit your needs.
+ * When your component renders, `useInvoiceAllQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useInvoiceAllQuery({
+ *   variables: {
+ *      skip: // value for 'skip'
+ *   },
+ * });
+ */
+export function useInvoiceAllQuery(baseOptions?: Apollo.QueryHookOptions<InvoiceAllQuery, InvoiceAllQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<InvoiceAllQuery, InvoiceAllQueryVariables>(InvoiceAllDocument, options);
+      }
+export function useInvoiceAllLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<InvoiceAllQuery, InvoiceAllQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<InvoiceAllQuery, InvoiceAllQueryVariables>(InvoiceAllDocument, options);
+        }
+export type InvoiceAllQueryHookResult = ReturnType<typeof useInvoiceAllQuery>;
+export type InvoiceAllLazyQueryHookResult = ReturnType<typeof useInvoiceAllLazyQuery>;
+export type InvoiceAllQueryResult = Apollo.QueryResult<InvoiceAllQuery, InvoiceAllQueryVariables>;

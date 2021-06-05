@@ -1,0 +1,12 @@
+query invoiceAll($skip: Int) {
+  invoiceAll(skip: $skip) {
+    items {
+      id
+      item
+      expDate
+      progress
+    }
+    total
+    hasMore
+  }
+}
