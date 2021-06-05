@@ -1,18 +1,27 @@
 import { Loading } from 'components/Loading';
-import { useInvoiceAllQuery } from 'generated/graphql';
+import { useLoadingOverlayContext } from 'contexts/LoadingOverlay';
+import { useDeleteInvoiceMutation, useInvoiceAllQuery } from 'generated/graphql';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import Spinner from 'react-bootstrap/Spinner';
 import Table from 'react-bootstrap/Table';
-import { BsArrowRepeat } from 'react-icons/bs';
+import Tooltip from 'react-bootstrap/Tooltip';
+import { BsArrowRepeat, BsImage, BsPencilSquare, BsTrash } from 'react-icons/bs';
 import styles from './list.module.scss';
 
 const List = () => {
   const invoiceQuery = useInvoiceAllQuery();
+  const [deleteInvoiceMutation, deleteInvoiceResult] = useDeleteInvoiceMutation();
   const [dataPage, setDataPage] = React.useState(1);
   const [loadingMore, setLoadingMore] = React.useState(false);
+  const setIsLoading = useLoadingOverlayContext();
+
+  React.useEffect(() => {
+    setIsLoading(deleteInvoiceResult.loading);
+  }, [deleteInvoiceResult.loading, setIsLoading]);
 
   const handleLoadMore = React.useCallback(async () => {
     setLoadingMore(true);
@@ -24,6 +33,16 @@ const List = () => {
     setLoadingMore(false);
     setDataPage(dataPage + 1);
   }, [invoiceQuery, dataPage]);
+
+  const handleDelete = React.useCallback((id: string) => async () => {
+    await deleteInvoiceMutation({
+      variables: {
+        id
+      },
+    });
+    await invoiceQuery.client.resetStore();
+    await invoiceQuery.refetch();
+  }, [invoiceQuery, deleteInvoiceMutation]);
 
   const warrantiesCount = React.useMemo(() => {
     if (invoiceQuery.loading) {
@@ -45,12 +64,20 @@ const List = () => {
     <tr key={item.id}>
       <td>{item.item}</td>
       <td>{item.expDate}</td>
-      <td>TBD</td>
+      <td>
+        <BsImage className="mr-sm-2"/>
+        <OverlayTrigger overlay={<Tooltip id="tooltip-edit">Edit</Tooltip>}>
+          <BsPencilSquare className="mr-sm-2"/>
+        </OverlayTrigger>
+        <OverlayTrigger overlay={<Tooltip id="tooltip-delete">Delete</Tooltip>}>
+          <BsTrash onClick={handleDelete(item.id)}/>
+        </OverlayTrigger>
+      </td>
       <td width="25%">
         <ProgressBar striped max={1} now={item.progress || 0} variant={(item.progress || 0) >= 1 ? 'danger' : 'primary'}/>
       </td>
     </tr>
-  )), [invoiceQuery.data?.invoiceAll.items]);
+  )), [invoiceQuery.data?.invoiceAll.items, handleDelete]);
 
   const loadMoreButton = React.useMemo(() => {
     const innerButton = loadingMore ? (

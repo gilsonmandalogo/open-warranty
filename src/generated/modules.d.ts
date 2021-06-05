@@ -17,6 +17,15 @@ declare module '*/upload.graphql' {
 }
     
 
+declare module '*/deleteInvoice.graphql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const deleteInvoice: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
 declare module '*/invoiceAll.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;

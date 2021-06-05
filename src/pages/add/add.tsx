@@ -66,7 +66,8 @@ const Add = () => {
         },
       });
     } catch {}
-  }, [createInvoiceMutation, photoUrl]);
+    await createInvoiceResult.client.clearStore();
+  }, [createInvoiceMutation, createInvoiceResult.client, photoUrl]);
 
   const handlePhotoChange = React.useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.currentTarget.files || event.currentTarget.files.length === 0) {

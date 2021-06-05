@@ -1,0 +1,3 @@
+mutation deleteInvoice($id: String!) {
+  deleteInvoice(id: $id)
+}
