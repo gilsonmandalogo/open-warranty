@@ -1,5 +1,6 @@
 import { ServerError } from '@apollo/client';
 import { Loading } from 'components/Loading';
+import { host } from 'config';
 import { useLoadingOverlayContext } from 'contexts/LoadingOverlay';
 import { useCreateInvoiceMutation, useUploadMutation } from 'generated/graphql';
 import React from 'react';
@@ -82,7 +83,7 @@ const Add = () => {
       });
 
       if (data) {
-        setPhotoUrl(data.upload);
+        setPhotoUrl(`${host}${data.upload}`);
       }
     } catch {}
   }, [uploadMutation]);
