@@ -43,7 +43,10 @@ const Add = () => {
       return <Loading/>
     }
     if (uploadResult.data) {
-      return <img alt="Uploaded" src={uploadResult.data.upload} className={styles.image} />
+      if (uploadResult.data.upload.endsWith('.pdf')) {
+          return <embed src={`${host}${uploadResult.data.upload}`} className={styles.image} type="application/pdf"/>
+      }
+      return <img alt="Uploaded" src={`${host}${uploadResult.data.upload}`} className={styles.image} />
     }
     return null;
   }, [uploadResult.loading, uploadResult.data]);
