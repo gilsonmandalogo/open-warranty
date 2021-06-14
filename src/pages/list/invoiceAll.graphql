@@ -5,6 +5,7 @@ query invoiceAll($skip: Int) {
       item
       expDate
       progress
+      photo
     }
     total
     hasMore

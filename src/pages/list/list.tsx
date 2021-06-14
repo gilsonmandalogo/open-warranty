@@ -1,4 +1,5 @@
 import { Loading } from 'components/Loading';
+import { host } from 'config';
 import { useLoadingOverlayContext } from 'contexts/LoadingOverlay';
 import { InvoiceAllResult, useDeleteInvoiceMutation, useInvoiceAllQuery } from 'generated/graphql';
 import React from 'react';
@@ -80,12 +81,16 @@ const List = () => {
       <td>{item.item}</td>
       <td>{item.expDate}</td>
       <td>
-        <BsImage className="mr-sm-2"/>
+        <OverlayTrigger overlay={<Tooltip id="tooltip-view">View</Tooltip>}>
+          <a href={`${host}${item.photo}`}>
+            <BsImage className={`mr-sm-2 ${styles.actionButton}`}/>
+          </a>
+        </OverlayTrigger>
         <OverlayTrigger overlay={<Tooltip id="tooltip-edit">Edit</Tooltip>}>
-          <BsPencilSquare className="mr-sm-2"/>
+          <BsPencilSquare className={`mr-sm-2 ${styles.actionButton}`}/>
         </OverlayTrigger>
         <OverlayTrigger overlay={<Tooltip id="tooltip-delete">Delete</Tooltip>}>
-          <BsTrash onClick={handleOpenDeleteModal(item)}/>
+          <BsTrash className={styles.actionButton} onClick={handleOpenDeleteModal(item)}/>
         </OverlayTrigger>
       </td>
       <td width="25%">

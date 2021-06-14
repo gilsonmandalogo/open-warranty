@@ -151,7 +151,7 @@ export type InvoiceAllQuery = (
     & Pick<InvoicePaginated, 'total' | 'hasMore'>
     & { items: Array<(
       { __typename?: 'InvoiceAllResult' }
-      & Pick<InvoiceAllResult, 'id' | 'item' | 'expDate' | 'progress'>
+      & Pick<InvoiceAllResult, 'id' | 'item' | 'expDate' | 'progress' | 'photo'>
     )> }
   ) }
 );
@@ -260,6 +260,7 @@ export const InvoiceAllDocument = gql`
       item
       expDate
       progress
+      photo
     }
     total
     hasMore

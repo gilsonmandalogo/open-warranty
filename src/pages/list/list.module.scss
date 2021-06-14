@@ -9,3 +9,11 @@
   margin: 0;
   height: 5rem;
 }
+
+.actionButton {
+  color: var(--dark);
+
+  &:hover {
+    cursor: pointer;
+  }
+}

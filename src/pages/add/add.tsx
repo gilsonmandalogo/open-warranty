@@ -86,7 +86,7 @@ const Add = () => {
       });
 
       if (data) {
-        setPhotoUrl(`${host}${data.upload}`);
+        setPhotoUrl(`${data.upload}`);
       }
     } catch {}
   }, [uploadMutation]);
@@ -115,6 +115,7 @@ const Add = () => {
               label="Invoice photo"
               required
               onChange={handlePhotoChange}
+              accept=".jpg,.jpeg,.png,.pdf"
             />
             <div className={styles.imagePreviewWrapper}>
               {imagePreview}
