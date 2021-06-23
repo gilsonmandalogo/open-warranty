@@ -7,9 +7,3 @@ generates:
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
-  src/generated/modules.d.ts:
-    plugins:
-      - typescript-graphql-files-modules
-  ./graphql.schema.json:
-    plugins:
-      - "introspection"

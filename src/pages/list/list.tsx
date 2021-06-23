@@ -63,21 +63,21 @@ const List = () => {
   const warrantiesCount = React.useMemo(() => {
     if (invoiceQuery.loading) {
       return (
-        <div className={styles.loadingWrapper}>
+        <div data-testid="loading" className={styles.loadingWrapper}>
           <Loading/> Loading...
         </div>
       )
     }
 
     return (
-      <p className={styles.countWrapper}>
+      <p data-testid="warrantiesCount" className={styles.countWrapper}>
         {invoiceQuery.data?.invoiceAll.total} warranties
       </p>
     )
   }, [invoiceQuery.loading, invoiceQuery.data?.invoiceAll.total]);
 
   const items = React.useMemo(() => invoiceQuery.data?.invoiceAll.items.map(item => (
-    <tr key={item.id}>
+    <tr data-testid="tableRow" key={item.id}>
       <td>{item.item}</td>
       <td>{item.expDate}</td>
       <td>
@@ -90,7 +90,11 @@ const List = () => {
           <BsPencilSquare className={`mr-sm-2 ${styles.actionButton}`}/>
         </OverlayTrigger>
         <OverlayTrigger overlay={<Tooltip id="tooltip-delete">Delete</Tooltip>}>
-          <BsTrash className={styles.actionButton} onClick={handleOpenDeleteModal(item)}/>
+          <BsTrash
+            data-testid="delete"
+            className={styles.actionButton}
+            onClick={handleOpenDeleteModal(item)}
+          />
         </OverlayTrigger>
       </td>
       <td width="25%">
@@ -107,7 +111,12 @@ const List = () => {
       );
 
       return (
-        <Button className="d-flex align-items-center" disabled={!invoiceQuery.data?.invoiceAll.hasMore || loadingMore} onClick={handleLoadMore}>
+        <Button
+          data-testid="loadMoreButton"
+          className="d-flex align-items-center"
+          disabled={!invoiceQuery.data?.invoiceAll.hasMore || loadingMore}
+          onClick={handleLoadMore}
+        >
           {innerButton}
         </Button>
       );
@@ -136,16 +145,27 @@ const List = () => {
           </div>
         )}
       </Container>
-      <Modal show={!!itemToDelete} onHide={handleCloseDeleteModal()}>
+      <Modal
+        data-testid="modal"
+        show={!!itemToDelete}
+        onHide={handleCloseDeleteModal()}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Delete confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>Are you sure you want to delete "{itemToDelete?.item}"?</Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseDeleteModal(itemToDelete)}>
+          <Button
+            data-testid="deleteConfirm"
+            variant="primary"
+            onClick={handleCloseDeleteModal(itemToDelete)}
+          >
             Yes
           </Button>
-          <Button variant="secondary" onClick={handleCloseDeleteModal()}>
+          <Button
+            variant="secondary"
+            onClick={handleCloseDeleteModal()}
+          >
             No
           </Button>
         </Modal.Footer>

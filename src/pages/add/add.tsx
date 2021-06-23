@@ -97,10 +97,15 @@ const Add = () => {
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
+      <Form data-testid="form" onSubmit={handleSubmit}>
         <Navbar bg="secondary" variant="dark">
           <Nav className="ml-auto">
-            <Button variant="success" type="submit" className="mr-sm-2">
+            <Button
+              data-testid="submitButton"
+              variant="success"
+              type="submit"
+              className="mr-sm-2"
+            >
               <BsCheck/>
             </Button>
             <Button variant="danger">
@@ -112,6 +117,7 @@ const Add = () => {
         <Container fluid="sm" className="my-sm-4">
           <Form.Group controlId="invoice">
             <Form.File
+              data-testid="fieldPhoto"
               label="Invoice photo"
               required
               onChange={handlePhotoChange}
@@ -125,6 +131,7 @@ const Add = () => {
           <Form.Group controlId="name">
             <Form.Label>Item name</Form.Label>
             <Form.Control
+              data-testid="fieldItemName"
               type="text"
               maxLength={255}
               placeholder="Item name"
@@ -135,6 +142,7 @@ const Add = () => {
           <Form.Group controlId="duration">
             <Form.Label>Warranty duration</Form.Label>
             <Form.Control
+              data-testid="fieldWarrantyDuration"
               type="number"
               min={1}
               placeholder="Warranty duration"
@@ -144,6 +152,7 @@ const Add = () => {
           <Form.Group controlId="date">
             <Form.Label>Purchase date</Form.Label>
             <Form.Control
+              data-testid="fieldPurchaseDate"
               type="date"
               placeholder="Purchase date"
             />
