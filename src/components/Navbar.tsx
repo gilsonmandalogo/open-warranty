@@ -22,7 +22,7 @@ export const Navbar = () => {
 
   return (
     <BsNavbar bg="dark" variant="dark" sticky="top">
-      <BsNavbar.Brand>Warranty</BsNavbar.Brand>
+      <BsNavbar.Brand>Open-Warranty</BsNavbar.Brand>
       <BsNavbar.Toggle aria-controls="navbar-main"/>
       <BsNavbar.Collapse id="navbar-main">
       <Nav className="ml-auto">

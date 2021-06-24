@@ -19,45 +19,44 @@ export type Scalars = {
 };
 
 export type CreateInvoiceInput = {
-  photo: Scalars['String'];
-  item: Scalars['String'];
   duration?: Maybe<Scalars['Int']>;
+  item: Scalars['String'];
+  photo: Scalars['String'];
   purchase?: Maybe<Scalars['DateTime']>;
 };
 
-
 export type Invoice = {
   __typename?: 'Invoice';
-  id: Scalars['ID'];
-  photo: Scalars['String'];
-  item: Scalars['String'];
   duration?: Maybe<Scalars['Int']>;
+  id: Scalars['ID'];
+  item: Scalars['String'];
+  photo: Scalars['String'];
   purchase?: Maybe<Scalars['DateTime']>;
 };
 
 export type InvoiceAllResult = {
   __typename?: 'InvoiceAllResult';
-  id: Scalars['ID'];
-  photo: Scalars['String'];
-  item: Scalars['String'];
   duration?: Maybe<Scalars['Int']>;
-  purchase?: Maybe<Scalars['DateTime']>;
   expDate?: Maybe<Scalars['DateTime']>;
+  id: Scalars['ID'];
+  item: Scalars['String'];
+  photo: Scalars['String'];
   progress?: Maybe<Scalars['Float']>;
+  purchase?: Maybe<Scalars['DateTime']>;
 };
 
 export type InvoicePaginated = {
   __typename?: 'InvoicePaginated';
+  hasMore: Scalars['Boolean'];
   items: Array<InvoiceAllResult>;
   total: Scalars['Int'];
-  hasMore: Scalars['Boolean'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   createInvoice: Invoice;
-  updateInvoice: Invoice;
   deleteInvoice: Scalars['Boolean'];
+  updateInvoice: Invoice;
   upload: Scalars['String'];
 };
 
@@ -67,13 +66,13 @@ export type MutationCreateInvoiceArgs = {
 };
 
 
-export type MutationUpdateInvoiceArgs = {
-  data: UpdateInvoiceInput;
+export type MutationDeleteInvoiceArgs = {
   id: Scalars['String'];
 };
 
 
-export type MutationDeleteInvoiceArgs = {
+export type MutationUpdateInvoiceArgs = {
+  data: UpdateInvoiceInput;
   id: Scalars['String'];
 };
 
@@ -99,62 +98,39 @@ export type QueryInvoiceAllArgs = {
 };
 
 export type UpdateInvoiceInput = {
-  photo?: Maybe<Scalars['String']>;
-  item?: Maybe<Scalars['String']>;
   duration?: Maybe<Scalars['Int']>;
+  item?: Maybe<Scalars['String']>;
+  photo?: Maybe<Scalars['String']>;
   purchase?: Maybe<Scalars['DateTime']>;
 };
-
 
 export type CreateInvoiceMutationVariables = Exact<{
   data: CreateInvoiceInput;
 }>;
 
 
-export type CreateInvoiceMutation = (
-  { __typename?: 'Mutation' }
-  & { createInvoice: (
-    { __typename?: 'Invoice' }
-    & Pick<Invoice, 'id'>
-  ) }
-);
+export type CreateInvoiceMutation = { __typename?: 'Mutation', createInvoice: { __typename?: 'Invoice', id: string } };
 
 export type UploadMutationVariables = Exact<{
   file: Scalars['Upload'];
 }>;
 
 
-export type UploadMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'upload'>
-);
+export type UploadMutation = { __typename?: 'Mutation', upload: string };
 
 export type DeleteInvoiceMutationVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type DeleteInvoiceMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'deleteInvoice'>
-);
+export type DeleteInvoiceMutation = { __typename?: 'Mutation', deleteInvoice: boolean };
 
 export type InvoiceAllQueryVariables = Exact<{
   skip?: Maybe<Scalars['Int']>;
 }>;
 
 
-export type InvoiceAllQuery = (
-  { __typename?: 'Query' }
-  & { invoiceAll: (
-    { __typename?: 'InvoicePaginated' }
-    & Pick<InvoicePaginated, 'total' | 'hasMore'>
-    & { items: Array<(
-      { __typename?: 'InvoiceAllResult' }
-      & Pick<InvoiceAllResult, 'id' | 'item' | 'expDate' | 'progress' | 'photo'>
-    )> }
-  ) }
-);
+export type InvoiceAllQuery = { __typename?: 'Query', invoiceAll: { __typename?: 'InvoicePaginated', total: number, hasMore: boolean, items: Array<{ __typename?: 'InvoiceAllResult', id: string, item: string, expDate?: any | null | undefined, progress?: number | null | undefined, photo: string }> } };
 
 
 export const CreateInvoiceDocument = gql`

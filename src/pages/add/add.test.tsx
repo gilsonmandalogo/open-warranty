@@ -36,7 +36,9 @@ describe('"add" page', () => {
       },
       result: jest.fn(() => ({
         data: {
-          id: '1',
+          createInvoice: {
+            id: '1',
+          },
         },
       })),
     };
@@ -92,7 +94,9 @@ describe('"add" page', () => {
       },
       result: jest.fn(() => ({
         data: {
-          id: '1',
+          createInvoice: {
+            id: '1',
+          },
         },
       })),
     };
